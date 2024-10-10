@@ -20,7 +20,7 @@ export default function Player({ initialName, symbol }) {
         {isEditing ? (
           <input
             value={playerName}
-            onChange={(event) => handleChangingName(event)}
+            onChange={handleChangingName}
             type="text"
             required
           />
