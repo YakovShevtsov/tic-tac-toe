@@ -6,8 +6,9 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({onChangePlayer, symbol}) {
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
 
   function handleRegisterTurn(rowIndex, colIndex, playerSymbol) {
     setGameBoard((prevTurns) => {
@@ -15,7 +16,7 @@ export default function GameBoard() {
       newTurns[rowIndex][colIndex] = playerSymbol;
       return newTurns;
     });
-    
+    onChangePlayer();
   }
 
   return (
@@ -30,7 +31,7 @@ export default function GameBoard() {
                   <li key={colIndex}>
                     <button
                       onClick={() =>
-                        handleRegisterTurn(rowIndex, colIndex, "X")
+                        handleRegisterTurn(rowIndex, colIndex, symbol)
                       }
                     >
                       {playerSymbol}

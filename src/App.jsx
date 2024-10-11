@@ -1,8 +1,19 @@
+import { useState } from "react";
 import GameBoard from "./components/Gameboard";
 import Player from "./components/Player";
 
 function App() {
-  
+  const [currentPlayerTurn, setCurrentPlayerTurn] = useState('X');
+
+  function handleChangeTurn() {
+    setCurrentPlayerTurn(prevPlayerTurn => {
+      if(prevPlayerTurn === 'O') {
+        return 'X';
+      } else {
+        return 'O';
+      }
+    });    
+  }
 
   return (
     <main>
@@ -11,7 +22,7 @@ function App() {
           <Player initialName="Player 1" symbol="X"/>
           <Player initialName="Player 2" symbol="O"/>
         </ol>
-        <GameBoard/>
+        <GameBoard onChangePlayer={handleChangeTurn} symbol={currentPlayerTurn}/>
       </div>
       LOG
     </main>
