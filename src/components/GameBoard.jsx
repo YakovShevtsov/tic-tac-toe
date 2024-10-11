@@ -11,19 +11,21 @@ export default function GameBoard() {
 
   function handleRegisterTurn(rowIndex, colIndex, playerSymbol) {
     setGameBoard((prevTurns) => {
-      let newTurns = prevTurns;
+      let newTurns = [...prevTurns];
       newTurns[rowIndex][colIndex] = playerSymbol;
       return newTurns;
     });
+    
   }
 
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => {
+      {gameBoard.map((row, rowIndex) => {        
         return (
           <li key={rowIndex}>
             <ol>
               {row.map((playerSymbol, colIndex) => {
+                
                 return (
                   <li key={colIndex}>
                     <button
