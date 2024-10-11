@@ -12,7 +12,7 @@ export default function GameBoard({onChangePlayer, symbol}) {
 
   function handleRegisterTurn(rowIndex, colIndex, playerSymbol) {
     setGameBoard((prevTurns) => {
-      let newTurns = [...prevTurns];
+      let newTurns = [...prevTurns.map(innerArray => [...innerArray])];      
       newTurns[rowIndex][colIndex] = playerSymbol;
       return newTurns;
     });
