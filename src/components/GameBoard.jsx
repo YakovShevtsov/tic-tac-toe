@@ -1,41 +1,29 @@
-import { useState } from "react";
-
 const initialGameBoard = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
 ];
 
-export default function GameBoard({onChangePlayer, symbol}) {
-  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+export default function GameBoard({ symbol, gameTurns, onSelectSquare }) {
+  let gameBoard = initialGameBoard;
 
+  for (const turn of gameTurns) {
+    const { square, player } = turn;
+    const { row, col  } = square;
 
-  function handleRegisterTurn(rowIndex, colIndex, playerSymbol) {
-    setGameBoard((prevTurns) => {
-      let newTurns = [...prevTurns.map(innerArray => [...innerArray])];      
-      newTurns[rowIndex][colIndex] = playerSymbol;
-      return newTurns;
-    });
-    onChangePlayer();
-  }
+    gameBoard[row][col] = player;
+  }  
 
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => {        
+      {gameBoard.map((row, rowIndex) => {
         return (
           <li key={rowIndex}>
             <ol>
               {row.map((playerSymbol, colIndex) => {
-                
                 return (
                   <li key={colIndex}>
-                    <button
-                      onClick={() =>
-                        handleRegisterTurn(rowIndex, colIndex, symbol)
-                      }
-                    >
-                      {playerSymbol}
-                    </button>
+                    <button onClick={() => onSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
                   </li>
                 );
               })}
