@@ -3,6 +3,7 @@ import GameBoard from "./components/Gameboard";
 import Player from "./components/Player";
 import Log from "./components/Log";
 import { WINNING_COMBINATIONS } from "./winning-combinations";
+import GameOver from "./components/GameOver";
 
 const initialGameBoard = [
   [null, null, null],
@@ -52,6 +53,8 @@ function App() {
     }
   }
 
+  const hasDraw = !winner && gameTurns.length === 9;
+
   function handleChangeTurn(rowIndex, colIndex) {
     setGameTurns((prevGameTurns) => {
       const currentPlayer = getCurrentPlayer(prevGameTurns);
@@ -68,10 +71,16 @@ function App() {
     });
   }
 
+  // function handleRestartGame() {
+  //   setGameTurns([]);
+  //   winner = null;
+  //   gameBoard = initialGameBoard;
+  // }
+
   return (
     <main>
-      {winner && <div>WINNER!</div>}
       <div id="game-container">
+        {(winner || hasDraw) && <GameOver winnerPlayer={winner} hasDraw />}
         <ol
           id="players"
           className="highlight-player"
