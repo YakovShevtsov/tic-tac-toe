@@ -26,7 +26,7 @@ function App() {
 
   const currentPlayer = getCurrentPlayer(gameTurns);
 
-  let gameBoard = initialGameBoard;
+  let gameBoard = [...initialGameBoard.map((array) => [...array])];
   let winner;
 
   for (const turn of gameTurns) {
@@ -55,7 +55,7 @@ function App() {
 
   const hasDraw = !winner && gameTurns.length === 9;
 
-  function handleChangeTurn(rowIndex, colIndex) {
+  function handleMakeTurn(rowIndex, colIndex) {
     setGameTurns((prevGameTurns) => {
       const currentPlayer = getCurrentPlayer(prevGameTurns);
 
@@ -71,16 +71,20 @@ function App() {
     });
   }
 
-  // function handleRestartGame() {
-  //   setGameTurns([]);
-  //   winner = null;
-  //   gameBoard = initialGameBoard;
-  // }
+  function handleRestartGame() {
+    setGameTurns(() => []);
+  }
 
   return (
     <main>
       <div id="game-container">
-        {(winner || hasDraw) && <GameOver winnerPlayer={winner} hasDraw />}
+        {(winner || hasDraw) && (
+          <GameOver
+            winnerPlayer={winner}
+            hasDraw
+            onRestartGame={handleRestartGame}
+          />
+        )}
         <ol
           id="players"
           className="highlight-player"
@@ -98,7 +102,7 @@ function App() {
         </ol>
         <GameBoard
           board={gameBoard}
-          onSelectSquare={handleChangeTurn}
+          onSelectSquare={handleMakeTurn}
         />
       </div>
       <Log gameTurns={gameTurns} />
